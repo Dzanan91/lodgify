@@ -1,0 +1,13 @@
+Title: Phone field validation is not being propmted
+
+Description: After user tries to send contact data without inputing phone field validation is not being triggered 
+
+Steps to reproduce: 
+1. Navigate to contacts page
+2. Fill in all fields except phone field
+3. CLick on Send button
+
+Expected result: Validation should be triggered for phone input 
+Actual result: there is no validation message
+
+Environment: Chrome + Stage 

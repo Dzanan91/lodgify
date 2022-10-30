@@ -23,3 +23,45 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+import ContactPage from '../pages/contact-page'
+
+const contactPage = new ContactPage
+
+Cypress.Commands.add('visitContact',() => {
+    cy.visit(Cypress.env('contactUrl'))
+})
+
+Cypress.Commands.add('visitPricing',() => {
+    cy.visit(Cypress.env('pricingUrl'))
+})
+
+// This would best solved with While loop. Considering cypress doesnt support while loop recursive strategy has been applied for both command below
+Cypress.Commands.add('selectArrivalDate', (arrivalDateValue) => {
+
+    contactPage.selectMonthPrevious().invoke('text').then((month) => {
+        cy.log(month)
+        if (month == arrivalDateValue) {
+            cy.log('Your date is correct')
+        }
+        else {
+            contactPage.calendarNavigateForward()
+            cy.selectArrivalDate(arrivalDateValue)
+        }
+    })
+})
+
+Cypress.Commands.add('selectDepartureDate', (departureDateValue) => {
+
+    contactPage.selectMonthNext().invoke('text').then((month) => {
+        cy.log(month)
+        if (month == departureDateValue) {
+            cy.log('Your date is correct')
+        }
+        else {
+            contactPage.calendarNavigateForward()
+            cy.selectDepartureDate(departureDateValue)
+        }
+    })
+})
+
